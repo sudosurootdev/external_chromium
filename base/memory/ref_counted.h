@@ -260,10 +260,9 @@ class scoped_refptr {
     // AddRef first so that self assignment should work
     if (p)
       p->AddRef();
-    T* old_ptr = ptr_;
+    if (ptr_ )
+      ptr_ ->Release();
     ptr_ = p;
-    if (old_ptr)
-      old_ptr ->Release();
     return *this;
   }
 

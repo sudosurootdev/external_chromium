@@ -39,8 +39,8 @@
 extern char** environ;
 #endif
 
-#if defined(__ANDROID__) && !defined(__BIONIC_HAVE_UCONTEXT_T)
-// No ucontext.h on old Android C library headers
+#ifdef ANDROID
+// No ucontext.h on Android
 typedef void ucontext_t;
 #endif
 

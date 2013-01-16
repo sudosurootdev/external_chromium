@@ -108,14 +108,6 @@ class BASE_API LazyInstanceHelper {
   DISALLOW_COPY_AND_ASSIGN(LazyInstanceHelper);
 };
 
-// Allow preservation of object alignment in the lazy instance when using GCC.
-// __alignof__ is only defined for GCC > 4.2.
-#if defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 2))
-#define LAZY_ALIGN(T) __attribute__((aligned(__alignof__(T))))
-#else
-#define LAZY_ALIGN(T)
-#endif
-
 template <typename Type, typename Traits = DefaultLazyInstanceTraits<Type> >
 class LazyInstance : public LazyInstanceHelper {
  public:
@@ -175,14 +167,11 @@ class LazyInstance : public LazyInstanceHelper {
     base::subtle::Release_Store(&me->state_, STATE_EMPTY);
   }
 
-  // Preallocate the space for the Type instance, and preserve alignment.
-  int8 buf_[sizeof(Type)] LAZY_ALIGN(Type);
+  int8 buf_[sizeof(Type)];  // Preallocate the space for the Type instance.
   Type *instance_;
 
   DISALLOW_COPY_AND_ASSIGN(LazyInstance);
 };
-
-#undef LAZY_ALIGN
 
 }  // namespace base
 
