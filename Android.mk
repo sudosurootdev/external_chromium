@@ -491,6 +491,9 @@ LOCAL_CPPFLAGS := -Wno-sign-promo -Wno-missing-field-initializers -fvisibility-i
 # Just a few definitions not provided by bionic.
 LOCAL_CFLAGS += -include "android/prefix.h"
 
+LOCAL_CFLAGS += -Wno-error=strict-aliasing -Wno-error
+LOCAL_CPPFLAGS += -Wno-error=strict-aliasing -Wno-error
+
 # external/chromium/android is a directory to intercept stl headers that we do
 # not support yet.
 LOCAL_C_INCLUDES := \
