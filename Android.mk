@@ -58,7 +58,6 @@ LOCAL_SRC_FILES += \
     base/file_descriptor_shuffle.cc \
     base/file_path.cc \
     base/file_util.cc \
-    base/file_util_android.cc \
     base/file_util_posix.cc \
     base/lazy_instance.cc \
     base/logging.cc \
@@ -498,7 +497,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_C_INCLUDES)
 
 LOCAL_WHOLE_STATIC_LIBRARIES += libevent modp_b64 dmg_fp libcutils
-LOCAL_SHARED_LIBRARIES := libstlport libexpat libcrypto libssl libz libicuuc libicui18n libsqlite libcutils libdl
+LOCAL_SHARED_LIBRARIES := libstlport libexpat libcrypto libssl libz libicuuc libicui18n libsqlite libcutils liblog libdl
 
 LOCAL_PRELINK_MODULE := false
 
