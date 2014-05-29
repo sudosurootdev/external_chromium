@@ -30,7 +30,7 @@
 namespace net {
 
 // We cast back and forth, so make sure it's the size we're expecting.
-#if defined(__BIONIC__) && defined(ANDROID)
+#if defined(__BIONIC__) && defined(ANDROID) && !defined(__LP64__)
 COMPILE_ASSERT(sizeof(int32) == sizeof(off_t), off_t_32_bit);
 #else
 COMPILE_ASSERT(sizeof(int64) == sizeof(off_t), off_t_64_bit);

@@ -169,6 +169,8 @@ bool BeingDebugged() {
 #define DEBUG_BREAK() abort()
 #elif defined(ARCH_CPU_ARM_FAMILY)
 #define DEBUG_BREAK() asm("bkpt 0")
+#elif defined(ARCH_CPU_ARM64_FAMILY)
+#define DEBUG_BREAK() __asm__ __volatile__ ("brk #0" : : )
 #elif defined(ARCH_CPU_MIPS_FAMILY)
 #define DEBUG_BREAK() asm("break 2")
 #else

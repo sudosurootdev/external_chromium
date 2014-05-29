@@ -12,7 +12,7 @@ LOCAL_CPP_EXTENSION := .cc
 
 LOCAL_MODULE := libchromium_net
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-INTERMEDIATES := $(call local-intermediates-dir)
+INTERMEDIATES := $(call local-generated-sources-dir)
 
 LOCAL_SRC_FILES := \
     googleurl/src/gurl.cc \
@@ -46,10 +46,11 @@ LOCAL_SRC_FILES := \
     app/sql/statement.cc \
     app/sql/transaction.cc \
 
-ifeq ($(TARGET_ARCH),x86)
-LOCAL_SRC_FILES += \
+LOCAL_SRC_FILES_x86 += \
     base/atomicops_internals_x86_gcc.cc
-endif
+
+LOCAL_SRC_FILES_x86_64 += \
+    base/atomicops_internals_x86_gcc.cc
 
 LOCAL_SRC_FILES += \
     base/at_exit.cc \
@@ -468,6 +469,7 @@ LOCAL_GENERATED_SOURCES += $(GEN)
 
 LOCAL_CFLAGS := -DHAVE_CONFIG_H -DANDROID -DEXPAT_RELATIVE_PATH -DALLOW_QUOTED_COOKIE_VALUES -DCOMPONENT_BUILD -DGURL_DLL
 LOCAL_CPPFLAGS := -Wno-sign-promo -Wno-missing-field-initializers -fvisibility=hidden -fvisibility-inlines-hidden
+LOCAL_CFLAGS += -Wno-unused-parameter -Wno-narrowing -Wno-sizeof-pointer-memaccess
 
 # Just a few definitions not provided by bionic.
 LOCAL_CFLAGS += -include "android/prefix.h"
@@ -481,13 +483,11 @@ LOCAL_C_INCLUDES := \
 LOCAL_STATIC_LIBRARIES := libevent modp_b64 dmg_fp
 LOCAL_SHARED_LIBRARIES := libstlport libexpat libcrypto libssl libz libicuuc libicui18n libsqlite libcutils liblog libdl
 
-LOCAL_PRELINK_MODULE := false
-
 # Including this will modify the include path
 include external/stlport/libstlport.mk
 
 ifneq ($(strip $(WITH_ADDRESS_SANITIZER)),)
-    LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/asan
+    LOCAL_MODULE_RELATIVE_PATH := asan
     LOCAL_ADDRESS_SANITIZER := true
 endif
 

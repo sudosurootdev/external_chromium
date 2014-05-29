@@ -71,7 +71,8 @@ namespace net {
 
 // Discover the endianness by testing processor architecture.
 #if defined(ARCH_CPU_X86) || defined(ARCH_CPU_X86_64)\
- || defined(ARCH_CPU_ARMEL) || defined(ARCH_CPU_MIPSEL)
+ || defined(ARCH_CPU_ARMEL) || defined(ARCH_CPU_ARM64EL)\
+ || defined(ARCH_CPU_MIPSEL)
 #define IS_LITTLE_ENDIAN 1
 #undef  IS_BIG_ENDIAN
 #elif defined(ARCH_CPU_MIPSEB)
